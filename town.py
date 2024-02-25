@@ -176,7 +176,7 @@ def fn_WHO(self, arg):
 		i = arg["add"]
 		_id = i["id"]
 		if _id not in self.who:
-			self.print_line("Joining: %s" % (self.who[i].get("name", str(i))))
+			self.print_line("Joining: %s" % (i.get("name", str(i))))
 		self.who[_id] = i
 
 	if "remove" in arg and arg["remove"] in self.who:
