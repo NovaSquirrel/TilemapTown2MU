@@ -50,6 +50,7 @@ class TilemapTown(object):
 
 			except websockets.ConnectionClosed:
 				print("Connection closed")
+		self.mu_connection.line_handler = self.mu_connection.pre_connect_state_handler
 
 	def receive_server_message(self, message):
 		print("<< "+message)
@@ -229,7 +230,7 @@ def fn_MAI(self, arg):
 	self.print_line("Now entering: %s" % arg["name"])
 	if "desc" in arg and arg["desc"]:
 		self.print_line("  "+arg["desc"])
-	if "edge_links" in arg:
+	if "edge_links" in arg and isinstance(arg["edge_links"], list):
 		edge_links = arg["edge_links"]
 		link_names = []
 		for i in range(8):

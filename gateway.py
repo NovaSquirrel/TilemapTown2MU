@@ -122,7 +122,8 @@ class MUConnection(LineReceiver): # Handles a single user's connection
 			self.disconnect("Goodbye!")
 
 	def connecting_state_handler(self, text):
-		pass
+		if text == "quit":
+			self.disconnect("Goodbye!")
 
 	def connected_state_handler(self, text):
 		# Look for a prefix like " or :
@@ -205,6 +206,10 @@ def fn_cmd(self, arg):
 @gateway_command()
 def fn_allcommands(self, arg):
 	self.sendLineAsBytes(" ".join(gateway_command_handlers.keys()))
+
+@gateway_command()
+def fn_quit(self, arg):
+	self.disconnect("Goodbye!")
 
 def try_edge_link(self, link):
 	if self.tilemap_town and self.tilemap_town.map_info:
