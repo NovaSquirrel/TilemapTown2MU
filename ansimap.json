@@ -1,0 +1,328 @@
+[
+	{
+		"name": "grass",
+		"pic": [0, 0, 4],
+		"fgcolor": "white",
+		"bgcolor": "green",
+		"fgcolorRGB": "99e550",
+		"bgcolorRGB": "6abe30",
+		"ascii": "`"
+	},
+	{
+		"name": "grass",
+		"pic": [-1, 3, 0],
+		"fgcolor": "white",
+		"bgcolor": "green",
+		"fgcolorRGB": "009749",
+		"bgcolorRGB": "46a751",
+		"ascii": "`"
+	},
+	{
+		"name": "grass",
+		"pic": [-1, 3, 1],
+		"fgcolor": "white",
+		"bgcolor": "green",
+		"fgcolorRGB": "81b954",
+		"bgcolorRGB": "46a751",
+		"ascii": "`"
+	},
+	{
+		"name": "grass",
+		"pic": [-1, 0, 3],
+		"fgcolor": "white",
+		"bgcolor": "green",
+		"fgcolorRGB": "b2dc78",
+		"bgcolorRGB": "46a751",
+		"ascii": "`"
+	},
+	{
+		"name": "dirt",
+		"pic": [0, 6, 4],
+		"ascii": ";",
+		"fgcolorRGB": "8f563b",
+		"bgcolorRGB": "663931",
+		"fgcolor": "yellow",
+		"bgcolor": "red"
+	},	{
+		"name": "dirt",
+		"pic": [-1, 7, 2],
+		"ascii": ";",
+		"fgcolorRGB": "a68a7d",
+		"bgcolorRGB": "6c4257",
+		"fgcolor": "yellow",
+		"bgcolor": "red"
+	},
+	{
+		"name": "dirt",
+		"pic": [-1, 2, 0],
+		"ascii": ",",
+		"fgcolorRGB": "80533d",
+		"bgcolorRGB": "a37c52",
+		"fgcolor": "yellow",
+		"bgcolor": "red"
+	},
+	{
+		"name": "water",
+		"pic": [-1, 1, 1],
+		"ascii": "^",
+		"fgcolorRGB": "5dbec6",
+		"bgcolorRGB": "537bc8",
+		"fgcolor": "white",
+		"bgcolor": "cyan"
+	},
+	{
+		"name": "water",
+		"pic": [-1, 10, 3],
+		"ascii": "^",
+		"fgcolorRGB": "008fbb",
+		"bgcolorRGB": "006e9d",
+		"fgcolor": "blue",
+		"bgcolor": "cyan"
+	},
+	{
+		"name": "waterfall",
+		"pic": [-1, 1, 0],
+		"ascii": "~",
+		"utf8": "\u2248",
+		"fgcolorRGB": "5dbec6",
+		"bgcolorRGB": "537bc8",
+		"fgcolor": "blue",
+		"bgcolor": "cyan"
+	},
+	{
+		"name": "brown sand",
+		"pic": [0, 10, 3],
+		"ascii": "/",
+		"fgcolorRGB": "eec39a",
+		"bgcolorRGB": "d9a066",
+		"fgcolor": "white",
+		"bgcolor": "yellow"
+	},
+	{
+		"name": "purple sand",
+		"pic": [0, 10, 4],
+		"ascii": "/",
+		"fgcolorRGB": "d77bba",
+		"bgcolorRGB": "76428a",
+		"fgcolor": "white",
+		"bgcolor": "magenta"
+	},
+	{
+		"name": "red brick floor",
+		"pic": [0, 10, 8],
+		"ascii": "i",
+		"fgcolorRGB": "d95763",
+		"bgcolorRGB": "ac3232",
+		"fgcolor": "white",
+		"bgcolor": "red"
+	},
+	{
+		"name": "gray brick floor",
+		"pic": [0, 11, 8],
+		"utf8": "\u2261",
+		"ascii": "=",
+		"fgcolorRGB": "847e87",
+		"bgcolorRGB": "9badb7",
+		"fgcolor": "black",
+		"bgcolor": "white"
+	},
+	{
+		"name": "stone wall",
+		"pic": [0, 9, 1],
+		"utf8": "\u0393",
+		"ascii": "#",
+		"fgcolorRGB": "323c39",
+		"bgcolorRGB": "847e87",
+		"fgcolor": "black",
+		"bgcolor": "white"
+	},
+	{
+		"name": "x block",
+		"pic": [0, 15, 0],
+		"ascii": "X",
+		"fgcolorRGB": "000000",
+		"bgcolorRGB": "9aa2b3",
+		"fgcolor": "black",
+		"bgcolor": "white"
+	},
+	{
+		"name": "ice",
+		"pic": [0, 15, 10],
+		"ascii": "\\",
+		"fgcolorRGB": "ffffff",
+		"bgcolorRGB": "cbdbfc",
+		"fgcolor": "white",
+		"bgcolor": "cyan"
+	},
+	{
+		"name": "brown bricks",
+		"pic": [0, 7, 6],
+		"utf8": "\u0393",
+		"ascii": "+",
+		"fgcolorRGB": "cbdbfc",
+		"bgcolorRGB": "8f563b",
+		"fgcolor": "white",
+		"bgcolor": "red"
+	},
+	{
+		"name": "wood floor",
+		"pic": [-1, 10, 2],
+		"utf8": "\u2261",
+		"ascii": "-",
+		"fgcolorRGB": "5e3419",
+		"bgcolorRGB": "754e2f",
+		"fgcolor": "black",
+		"bgcolor": "red"
+	},
+	{
+		"name": "wood floor",
+		"pic": [0, 1, 6],
+		"ascii": "-",
+		"fgcolorRGB": "eec39a",
+		"bgcolorRGB": "d9a066",
+		"fgcolor": "black",
+		"bgcolor": "yellow"
+	},
+	{
+		"name": "wood wall",
+		"pic": [0, 3, 8],
+		"ascii": "O",
+		"fgcolorRGB": "8f563b",
+		"bgcolorRGB": "d9a066",
+		"fgcolor": "black",
+		"bgcolor": "yellow"
+	},
+	{
+		"name": "floor",
+		"pic": [0, 6, 15],
+		"ascii": "x",
+		"fgcolorRGB": "8a6f30",
+		"bgcolorRGB": "8f563b",
+		"fgcolor": "black",
+		"bgcolor": "red"
+	},
+	{
+		"name": "floor",
+		"pic": [0, 7, 15],
+		"ascii": "x",
+		"fgcolorRGB": "37946e",
+		"bgcolorRGB": "847e87",
+		"fgcolor": "cyan",
+		"bgcolor": "black"
+	},
+	{
+		"name": "floor",
+		"pic": [0, 7, 14],
+		"ascii": "%",
+		"fgcolorRGB": "d95763",
+		"bgcolorRGB": "cbdbfc",
+		"fgcolor": "red",
+		"bgcolor": "cyan"
+	},
+	{
+		"name": "floor",
+		"pic": [0, 7, 13],
+		"ascii": "|",
+		"fgcolorRGB": "5fcde4",
+		"bgcolorRGB": "306082",
+		"fgcolor": "cyan",
+		"bgcolor": "blue"
+	},
+	{
+		"name": "floor",
+		"pic": [0, 6, 17],
+		"ascii": "%",
+		"fgcolorRGB": "000000",
+		"bgcolorRGB": "d77bba",
+		"fgcolor": "black",
+		"bgcolor": "magenta"
+	},
+	{
+		"name": "force",
+		"pic": [0, 12, 19],
+		"ascii": "v",
+		"utf8": "\u25bc",
+		"fgcolorRGB": "ffffff",
+		"bgcolorRGB": "6abe30",
+		"fgcolor": "white",
+		"bgcolor": "green"
+	},
+	{
+		"name": "force",
+		"pic": [0, 13, 19],
+		"ascii": "^",
+		"utf8": "\u25b2",
+		"fgcolorRGB": "ffffff",
+		"bgcolorRGB": "6abe30",
+		"fgcolor": "white",
+		"bgcolor": "green"
+	},
+	{
+		"name": "force",
+		"pic": [0, 14, 19],
+		"ascii": "<",
+		"utf8": "\u25c4",
+		"fgcolorRGB": "ffffff",
+		"bgcolorRGB": "6abe30",
+		"fgcolor": "white",
+		"bgcolor": "green"
+	},
+	{
+		"name": "force",
+		"pic": [0, 15, 19],
+		"ascii": ">",
+		"utf8": "\u25ba",
+		"fgcolorRGB": "ffffff",
+		"bgcolorRGB": "6abe30",
+		"fgcolor": "white",
+		"bgcolor": "green"
+	},
+	{
+		"name": "blue wall",
+		"pic": [0, 16, 27],
+		"ascii": "O",
+		"fgcolorRGB": "5b6ee1",
+		"bgcolorRGB": "639bff",
+		"fgcolor": "white",
+		"bgcolor": "blue"
+	},
+	{
+		"name": "pink wall",
+		"pic": [0, 17, 27],
+		"ascii": "O",
+		"fgcolorRGB": "ac3232",
+		"bgcolorRGB": "d95763",
+		"fgcolor": "white",
+		"bgcolor": "red"
+	},
+	{
+		"name": "green wall",
+		"pic": [0, 18, 27],
+		"ascii": "O",
+		"fgcolorRGB": "4b692f",
+		"bgcolorRGB": "6abe30",
+		"fgcolor": "white",
+		"bgcolor": "green"
+	},
+	{
+		"name": "orange wall",
+		"pic": [0, 19, 27],
+		"ascii": "O",
+		"fgcolorRGB": "8f563b",
+		"bgcolorRGB": "df7126",
+		"fgcolor": "red",
+		"bgcolor": "yellow"
+	},
+	{
+		"name": "sign",
+		"pic": [0, 16, 17],
+		"utf8": "\u203c",
+		"ascii": "!",
+		"fgcolorRGB": "ffffff"
+	},
+	{
+		"name": "Invisible wall",
+		"pic": [-1, 3, 5],
+		"ignore": true
+	}
+]

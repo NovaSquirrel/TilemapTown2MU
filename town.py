@@ -14,9 +14,17 @@ class TilemapTown(object):
 
 		# State
 		self.entity_id = None
+		self.who = {}
+		self.tilesets = {}
+		self.tilesets_requested = set()
+
+		# Map the user is on
 		self.map_id = None
 		self.map_info = {}
-		self.who = {}
+		self.map_width = None
+		self.map_height = None
+		self.map_turfs = None
+		self.map_objs = None
 
 	# .----------------------------------------------
 	# | Websocket connection
@@ -79,6 +87,130 @@ class TilemapTown(object):
 
 	def print_lines(self, text):
 		self.mu_connection.sendLinesAsBytes(text)
+
+	def print_map_rect_around_xy(self, x, y, w, h):
+		x = max(0, x - w//2)
+		y = max(0, y - h//2)
+		if (x + w) >= self.map_width:
+			w = self.map_width - x
+		if (y + h) >= self.map_height:
+			h = self.map_height - y
+		self.print_map_rect(x, y, w, h)
+
+	def lookup_atom(self, atom):
+		if isinstance(atom, str):
+			s = atom.split(":")
+			if len(s) == 1:
+				return self.tilesets[""].get(s[0], None)
+			else:
+				return self.tilesets.get(s[0], {}).get(s[1], None)
+		return atom
+
+	def print_map_rect(self, x_base, y_base, w, h):
+		# Look for entities to draw
+		entities = {}
+		for k,e in self.who.items():
+			entities[(e['x'], e['y'])] = e
+
+		drawn_entities = []
+
+		# Draw grid
+		for y in range(y_base, y_base+h):
+			line = ""
+			for x in range(x_base, x_base+w):
+				tile_char = "?"
+				tile_fg = None
+				tile_bg = None
+
+				# Try drawing turf
+				turf = self.map_turfs[x][y]
+				if turf == None:
+					turf = self.map_info['default']
+				# Fetch data from the tileset if it's a tileset reference
+				turf = self.lookup_atom(turf)
+				if turf != None:
+					# Use the "pic" to find what text to replace the tile with
+					lookup = pic_to_text.get(tuple(turf['pic']), None)
+					if lookup != None:
+						if "fgcolorRGB" in lookup and self.mu_connection.rgb_color_enabled:
+							tile_fg = ansi_fg_hex(lookup["fgcolorRGB"])
+						else:
+							tile_fg = ansi_fgcolors[lookup.get("fgcolor", "black")]
+						if "bgcolorRGB" in lookup and self.mu_connection.rgb_color_enabled:
+							tile_bg = ansi_bg_hex(lookup["bgcolorRGB"])
+						else:
+							tile_bg = ansi_bgcolors[lookup.get("bgcolor", "white")]
+
+						if "utf8" in lookup and self.mu_connection.utf8_enabled:
+							tile_char = lookup["utf8"]
+						elif "ascii" in lookup:
+							tile_char = lookup["ascii"]
+
+				# Try drawing objects
+				obj = self.map_objs[x][y]
+				if isinstance(obj, list):
+					obj = obj[-1]
+				# Fetch data from the tileset if it's a tileset reference
+				obj = self.lookup_atom(obj)
+				if obj != None:
+					# Use the "pic" to find what text to replace the tile with
+					lookup = pic_to_text.get(tuple(obj['pic']), None)
+					if lookup != None:
+						if not lookup.get("ignore", False):
+							if "fgcolorRGB" in lookup and self.mu_connection.rgb_color_enabled:
+								tile_fg = ansi_fg_hex(lookup["fgcolorRGB"])
+							elif "fgcolor" in lookup:
+								tile_fg = ansi_fgcolors[lookup["fgcolor"]]
+							if "bgcolorRGB" in lookup and self.mu_connection.rgb_color_enabled:
+								tile_bg = ansi_bg_hex(lookup["bgcolorRGB"])
+							elif "bgcolor" in lookup:
+								tile_bg = ansi_bgcolors[lookup["bgcolor"]]
+
+							if "utf8" in lookup and self.mu_connection.utf8_enabled:
+								tile_char = lookup["utf8"]
+							elif "ascii" in lookup:
+								tile_char = lookup["ascii"]
+					elif "name" in obj:
+						tile_char = obj["name"][0]
+
+				# Draw character if there is one
+				entity = entities.get((x,y), None)
+				if entity != None:
+					if self.mu_connection.rgb_color_enabled:
+						tile_fg = ansi_fg_hex(random_entity_colors[hash(entity['id']) % len(random_entity_colors)])
+					else:
+						tile_fg = "\x1b[%dm" % ([31, 32, 33, 35, 36, 37][hash(entity['id']) % 6])
+
+					tile_bg = None
+					if entity['id'] == self.entity_id:
+						tile_char = '@'
+					else:
+						tile_char = entity['name'][0]
+					drawn_entities.append((tile_fg, tile_char, entity['name']))
+
+				# Put it in the line
+				if self.mu_connection.color_enabled:
+					if tile_fg == None or tile_bg == None:
+						line += self.mu_connection.ansi_reset()
+					if tile_fg:
+						line += tile_fg
+					if tile_bg:
+						line += tile_bg
+				line += tile_char
+
+			self.print_line(line + self.mu_connection.ansi_reset())
+
+		# Show a legend for what entities are what
+		drawn_entity_line = ""
+		for e in drawn_entities:
+			fg, char, name = e
+			if drawn_entity_line:
+				drawn_entity_line += "|"
+			if self.mu_connection.color_enabled:
+				drawn_entity_line += '%s%s%s=%s' % (fg, char, self.mu_connection.ansi_reset(), name)
+			else:
+				drawn_entity_line += '%s=%s' % (char, name)
+		self.print_line(drawn_entity_line)
 
 # -----------------------------------------------------------------------------
 
@@ -155,6 +287,16 @@ def fn_PRI(self, arg):
 @protocol_command()
 def fn_BAG(self, arg):
 	pass
+
+@protocol_command()
+def fn_MOV(self, arg):
+	_id = arg["id"]
+	if _id not in self.who:
+		return
+	e = self.who[_id]
+	if "to" in arg:
+		e["x"] = arg["to"][0]
+		e["y"] = arg["to"][1]
 
 @protocol_command()
 def fn_WHO(self, arg):
@@ -245,3 +387,133 @@ def fn_MAI(self, arg):
 			if v.get("name", None):
 				people.append(v["name"])
 		self.print_line("Contents: %s" % ", ".join(people))
+
+	# Get ready to load the map
+	self.map_width = arg["size"][0]
+	self.map_height = arg["size"][1]
+	self.map_turfs = []
+	self.map_objs = []
+	for x in range(0, self.map_width):
+		self.map_turfs.append([None] * self.map_height)
+		self.map_objs.append([None] * self.map_height)
+
+@protocol_command()
+def fn_MAP(self, arg):
+	for t in arg["turf"]:
+		self.map_turfs[t[0]][t[1]] = t[2]
+	for o in arg["obj"]:
+		self.map_objs[o[0]][o[1]] = o[2]
+
+@protocol_command()
+def fn_BLK(self, arg):
+	# do copies
+	for copy in arg.get("copy", []):
+		do_turf = copy.get("turf", True)
+		do_obj  = copy.get("obj", True)
+		x1, y1, width, height = copy["src"]
+		x2, y2                = copy["dst"]
+
+		# turf
+		if do_turf:
+			copied = []
+			for w in range(width):
+				row = []
+				for h in range(height):
+					row.append(map.turfs[x1+w][y1+h])
+				copied.append(row)
+
+			for w in range(width):
+				for h in range(height):
+					self.map_turfs[x2+w][y2+h] = copied[w][h]
+		# obj
+		if do_obj:
+			copied = []
+			for w in range(width):
+				row = []
+				for h in range(height):
+					row.append(map.objs[x1+w][y1+h])
+				copied.append(row)
+
+			for w in range(width):
+				for h in range(height):
+					self.map_objs[x2+w][y2+h] = copied[w][h]
+
+	# Place the tiles
+	for turf in arg.get("turf", []):
+		x = turf[0]
+		y = turf[1]
+		a = turf[2]
+		width = 1
+		height = 1
+		if len(turf) == 5:
+			width = turf[3]
+			height = turf[4]
+		for w in range(width):
+			for h in range(height):
+				self.map_turfs[x+w][y+h] = a
+
+	# Place the object lists
+	for obj in arg.get("obj", []):
+		x = obj[0]
+		y = obj[1]
+		a = obj[2]
+		width = 1
+		height = 1
+		if len(turf) == 5:
+			width = turf[3]
+			height = turf[4]
+		for w in range(width):
+			for h in range(height):
+				self.map_objs[x+w][y+h] = a
+
+@protocol_command()
+def fn_RSC(self, arg):
+	for k,v in arg.get('tilesets', {}).items():
+		self.tilesets[k] = v
+
+@protocol_command()
+def fn_TSD(self, arg):
+	key = arg['id']
+	data = arg['data']
+
+	if isinstance(data, str):
+		data = json.loads(data)
+	
+	self.tilesets[key] = data
+	self.tilesets_requested.discard(key)
+
+# -----------------------------------------------------------------------------
+with open('ansimap.json', 'r') as f:
+	pic_to_text = {}
+	for e in json.load(f):
+		pic = e['pic']
+		if isinstance(pic[0], list):
+			for p in pic:
+				pic_to_text[tuple(p)] = e
+		else:
+			pic_to_text[tuple(pic)] = e
+
+ansi_fgcolors = {
+	"black": "\x1b[30m",
+	"red": "\x1b[31m",
+	"green": "\x1b[32m",
+	"yellow": "\x1b[33m",
+	"blue": "\x1b[34m",
+	"magenta": "\x1b[35m",
+	"cyan": "\x1b[36m",
+	"white": "\x1b[37m"
+}
+
+ansi_bgcolors = {
+	"black": "\x1b[40m",
+	"red": "\x1b[41m",
+	"green": "\x1b[42m",
+	"yellow": "\x1b[43m",
+	"blue": "\x1b[44m",
+	"magenta": "\x1b[45m",
+	"cyan": "\x1b[46m",
+	"white": "\x1b[47m"
+}
+
+# Colors taken from island-joy-16
+random_entity_colors = ["ffffff", "6df7c1", "11adc1", "5bb361", "a1e55a", "f7e476", "f99252", "cb4d68", "f48cb6", "f7b69e"]
