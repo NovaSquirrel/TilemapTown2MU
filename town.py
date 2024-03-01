@@ -399,6 +399,10 @@ def fn_MAI(self, arg):
 
 @protocol_command()
 def fn_MAP(self, arg):
+	for x in range(arg["pos"][0], arg["pos"][2]+1):
+		for y in range(arg["pos"][1], arg["pos"][3]+1):
+			self.map_turfs[x][y] = arg["default"]
+			self.map_objs[x][y] = None
 	for t in arg["turf"]:
 		self.map_turfs[t[0]][t[1]] = t[2]
 	for o in arg["obj"]:
