@@ -214,7 +214,7 @@ gateway_command_handlers = {}
 # Commands where the character (or several characters) needs to match
 prefix_gateway_command_handlers = {}
 # Commands that will be sent to the server as a CMD message as-is
-pass_through_commands = {'tell', 'roll', 'away', 'status', 'nick', 'userdesc', 'userpic', 'login', 'register', 'changepass', 'who', 'entitywho', 'gwho', 'look', 'last', 'goback', 'tpa', 'tpahere', 'tpaccept', 'tpdeny', 'tpcancel', 'sethome', 'home', 'carry', 'followme', 'hopon', 'hopoff', 'dropoff', 'rideend', 'carrywho', 'ridewho', 'giveitem', 'publicmaps', 'publicmaps', 'mapid', 'map', 'time', 'listeners', 'entity', 'e', 'msg', 'stat', 'findrp', 'findiic', 'tpi', 'whereare', 'wa', 'ewho', 'whoami', 'p'}
+pass_through_commands = {'tell', 'roll', 'away', 'status', 'nick', 'userdesc', 'userpic', 'login', 'register', 'changepass', 'who', 'entitywho', 'gwho', 'look', 'last', 'goback', 'tpa', 'tpahere', 'tpaccept', 'tpdeny', 'tpcancel', 'sethome', 'home', 'carry', 'followme', 'hopon', 'hopoff', 'dropoff', 'rideend', 'carrywho', 'ridewho', 'giveitem', 'publicmaps', 'publicmaps', 'mapid', 'map', 'time', 'listeners', 'entity', 'e', 'msg', 'stat', 'findrp', 'findiic', 'tpi', 'whereare', 'wa', 'ewho', 'whoami', 'p', 'topic', 'cleartopic'}
 # Commands that are alternate names for other commands
 command_aliases = {}
 
