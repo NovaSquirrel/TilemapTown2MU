@@ -185,7 +185,7 @@
 	},
 	{
 		"name": "wood wall",
-		"pic": [0, 3, 8],
+		"pic": [[0, 3, 8], [-1, 0, 24]],
 		"ascii": "O",
 		"fgcolorRGB": "8f563b",
 		"bgcolorRGB": "d9a066",
@@ -702,5 +702,33 @@
 		"pic": [-1, 2, 6],
 		"utf8": "\u2518",
 		"ascii": "+"
+	},
+	{
+		"name": "ice wall",
+		"pic": [-1, 3, 20],
+		"ascii": "%",
+		"fgcolorRGB": "ffffff",
+		"bgcolorRGB": "cbdbfc",
+		"fgcolor": "white",
+		"bgcolor": "cyan"
+	},
+	{
+		"name": "monitor",
+		"pic": [-1, 11, 20],
+		"class": "-",
+		"utf8": "\u2261",
+		"fgcolorRGB": "595652",
+		"bgcolorRGB": "222034",
+		"fgcolor": "white",
+		"bgcolor": "black"
+	},
+	{
+		"name": "metal wall",
+		"pic": [-1, 15, 20],
+		"class": "|",
+		"fgcolorRGB": "9badb7",
+		"bgcolorRGB": "847e87",
+		"fgcolor": "white",
+		"bgcolor": "black"
 	}
 ]
