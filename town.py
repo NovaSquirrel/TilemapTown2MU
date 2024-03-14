@@ -372,6 +372,8 @@ def fn_MAI(self, arg):
 	self.print_line("Now entering: %s" % arg["name"])
 	if "desc" in arg and arg["desc"]:
 		self.print_line("  "+arg["desc"])
+	if "topic" in arg and arg["topic"]:
+		self.print_line("  Topic: \"%s\" (by %s)" % (arg["topic"], arg["topic_username"]))
 	if "edge_links" in arg and isinstance(arg["edge_links"], list):
 		edge_links = arg["edge_links"]
 		link_names = []
